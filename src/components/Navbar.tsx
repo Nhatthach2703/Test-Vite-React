@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
-const Navbar = () => {
+const CustomNavbar = () => {
   return (
-    <nav style={styles.nav}>
-      <h2 style={styles.logo}>MyApp</h2>
-      <div>
-        <Link to="/" style={styles.link}>Home</Link>
-        <Link to="/login" style={styles.link}>Login</Link>
-        <Link to="/register" style={styles.link}>Register</Link>
-      </div>
-    </nav>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Navbar.Brand href="#">MyApp</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-const styles = {
-  nav: { display: 'flex', justifyContent: 'space-between', padding: '1rem', background: '#222', color: 'white' },
-  logo: { margin: 0 },
-  link: { color: 'white', marginLeft: '1rem', textDecoration: 'none' }
-};
-
-export default Navbar;
+export default CustomNavbar;

@@ -1,9 +1,14 @@
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'react-bootstrap';
+
 const Footer = () => {
-    return (
-      <footer style={{ padding: '1rem', textAlign: 'center', background: '#222', color: 'white' }}>
+  return (
+    <footer className="bg-dark text-white text-center py-3">
+      <Container>
         © 2025 MyApp. All rights reserved.
-      </footer>
-    );
-  };
-  
-  export default Footer;  
+      </Container>
+    </footer>
+  );
+};
+
+export default Footer;
