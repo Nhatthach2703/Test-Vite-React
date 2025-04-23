@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import API from '../services/api';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Container } from 'react-bootstrap';
 
@@ -10,10 +9,9 @@ interface LoginForm {
   password: string;
 }
 
-const Login = () => {
+const Login = ({ login }: { login: (token: string, account: any, user: any) => void; }) => {
   const [form, setForm] = useState<LoginForm>({ username: '', password: '' });
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

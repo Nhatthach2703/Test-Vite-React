@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
-const CustomNavbar = () => {
-  const { isLoggedIn, username, logout } = useAuth();
-
+const CustomNavbar = ({ isLoggedIn, username, logout }: { isLoggedIn: boolean; username: string; logout: () => void; }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
