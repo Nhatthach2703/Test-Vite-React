@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import API from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Container } from 'react-bootstrap';
 
@@ -12,15 +13,21 @@ interface LoginForm {
 const Login = () => {
   const [form, setForm] = useState<LoginForm>({ username: '', password: '' });
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await API.post('/auth/login', form);
-      alert(res.data.message);
+      const { data } = await API.post('/auth/login', form);
+      const { token, account, user, message } = data;
+
+      login(token, account, user);
+
+      alert(message);
       navigate('/');
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Đăng nhập thất bại');
+      const errorMessage = err.response?.data?.message || 'Đăng nhập thất bại';
+      alert(errorMessage);
     }
   };
 
