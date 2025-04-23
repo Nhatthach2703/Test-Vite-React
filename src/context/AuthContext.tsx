@@ -1,42 +1,18 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useReducer } from 'react';
+import { authReducer, initialAuthState, AuthAction, AuthState } from '../reducers/authReducer';
 
 interface AuthContextProps {
-  isLoggedIn: boolean;
-  username: string;
-  login: (token: string, account: any, user: any) => void;
-  logout: () => void;
+  state: AuthState;
+  dispatch: React.Dispatch<AuthAction>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
-
-  const login = (token: string, account: any, user: any) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('account', JSON.stringify(account));
-    localStorage.setItem('user', JSON.stringify(user));
-
-    // Print the values to the browser console for debugging
-    console.log('Account:', account);
-    console.log('User:', user);
-    console.log('Token:', token);
-
-    setIsLoggedIn(true);
-    setUsername(account.username);
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('account');
-    localStorage.removeItem('user');
-    setIsLoggedIn(false);
-    setUsername('');
-  };
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, username, login, logout }}>
+    <AuthContext.Provider value={{ state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );

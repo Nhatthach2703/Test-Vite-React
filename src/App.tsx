@@ -6,17 +6,29 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { useReducer } from 'react';
+import { authReducer, initialAuthState } from './reducers/authReducer';
 import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
+
+  const login = (token: string, account: any, user: any) => {
+    dispatch({ type: 'LOGIN', payload: { token, account, user } });
+  };
+
+  const logout = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
+
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
+        <Navbar isLoggedIn={state.isLoggedIn} username={state.username} logout={logout} />
         <Container className="my-5" style={{ minHeight: '80vh' }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login login={login} />} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </Container>

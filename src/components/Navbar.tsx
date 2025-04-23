@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import { useAuth } from '../context/AuthContext';
 
 const CustomNavbar = () => {
-  const { isLoggedIn, username, logout } = useAuth();
+  const { state, dispatch } = useAuth();
+
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -12,10 +16,10 @@ const CustomNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {isLoggedIn ? (
+            {state.isLoggedIn ? (
               <>
-                <Nav.Link href="#">Hello, {username}</Nav.Link>
-                <Nav.Link onClick={logout}>Logout</Nav.Link>
+                <Nav.Link href="#">Hello, {state.username}</Nav.Link>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </>
             ) : (
               <>
